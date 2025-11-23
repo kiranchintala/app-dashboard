@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+const deps = require('./package.json').dependencies;
 
 module.exports = {
   entry: './src/main.jsx',
@@ -9,10 +10,18 @@ module.exports = {
   target: 'web',
   devServer: {
     port: 3001,
-    historyApiFallback: true
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
   output: {
-    publicPath: '/'
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: 'auto',
   },
   resolve: {
     extensions: ['.js', '.jsx']
@@ -28,11 +37,16 @@ module.exports = {
       name: 'dashboard',
       filename: 'remoteEntry.js',
       exposes: {
-        './App': './src/App.jsx'
+        './App': './src/App.jsx',
       },
       shared: {
         react: { singleton: true, requiredVersion: '^18.2.0' },
         'react-dom': { singleton: true, requiredVersion: '^18.2.0' },
+        'react-router-dom': { singleton: true, requiredVersion: '^6.20.0' },
+        '@tanstack/react-query': {
+          singleton: true,
+          requiredVersion: deps['@tanstack/react-query'],
+        },
         '@mtbs/shared-lib': {
           singleton: true,
           requiredVersion: '^1.0.0'
