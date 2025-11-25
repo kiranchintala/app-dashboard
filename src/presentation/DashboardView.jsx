@@ -38,13 +38,22 @@ const DashboardView = ({ upcoming = [], past = [] }) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-[#dfe5ff] via-[#e3dfff] to-[#fde2ff]">
+    <div
+      className="
+      min-h-screen
+      flex flex-col
+      max-w-7xl mx-auto
+      p-4 sm:p-6 lg:p-8
+      bg-gradient-to-br from-[#dfe5ff] via-[#e3dfff] to-[#fde2ff]
+    "
+    >
       {/* Header Section */}
       <div className="pb-5 border-b border-gray-200 sm:pb-0">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">My Appointments</h1>
         <p className="mt-2 text-sm text-gray-500">
           View favorites, upcoming Appointments, and history.
         </p>
+
         {/* Tab Navigation */}
         <div className="mt-6">
           <nav className="-mb-px flex space-x-8" aria-label="Tabs">
@@ -61,12 +70,13 @@ const DashboardView = ({ upcoming = [], past = [] }) => {
         </div>
       </div>
 
-      {/* Conditionally Rendered Content */}
-      <div className="mt-4">
+      {/* Content */}
+      <div className="mt-4 flex-1">
         {renderContent()}
       </div>
     </div>
   );
+
 };
 
 export default DashboardView;
